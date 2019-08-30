@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>3.0.1</Version>
+    <Copyright>Levi Gillis 2019</Copyright>
+    <PackageProjectUrl>https://github.com/Levi--G/PlugSharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Levi--G/PlugSharp</RepositoryUrl>
+    <Description>A c# client library for plug.dj bots or clients</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JsonHCS.Net.Proxies" Version="1.4.0" />
+    <PackageReference Include="System.Net.WebSockets.Client" Version="4.3.2" />
+  </ItemGroup>
+
+</Project>
