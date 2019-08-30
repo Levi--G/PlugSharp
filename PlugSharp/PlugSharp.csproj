@@ -7,8 +7,13 @@
     <Version>3.0.1</Version>
     <Copyright>Levi Gillis 2019</Copyright>
     <PackageProjectUrl>https://github.com/Levi--G/PlugSharp</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Levi--G/PlugSharp</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Levi--G/PlugSharp.git</RepositoryUrl>
     <Description>A c# client library for plug.dj bots or clients</Description>
+    <NeutralLanguage></NeutralLanguage>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Plug</PackageTags>
+    <PackageReleaseNotes>Initial release on NuGet</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
