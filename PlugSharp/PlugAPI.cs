@@ -14,10 +14,13 @@ namespace PlugSharp
         public abstract Task<Response<cfst, object>> GetMobileInit();
 
         [HttpPost("auth/login")]
-        public abstract Task Login(LoginRequest request);
+        public abstract Task<Response<object, object>> Login(LoginRequest request);
 
         [HttpPost("booth/skip")]
-        public abstract Task Skip(Skip skip);
+        public abstract Task<Response<object, object>> Skip(Skip skip);
+
+        [HttpPost("booth/move")]
+        public abstract Task<Response<object, object>> Move(Move skip);
 
         public Task Skip(Advance advance)
         {
@@ -34,10 +37,10 @@ namespace PlugSharp
         public abstract Task<Response<Playlist, object>> CreatePlaylist(int id);
 
         [HttpPost("votes")]
-        public abstract Task Vote(VoteRequest vote);
+        public abstract Task<Response<object, object>> Vote(VoteRequest vote);
 
         [HttpPost("grabs")]
-        public abstract Task Grab(GrabRequest vote);
+        public abstract Task<Response<Playlist, object>> Grab(GrabRequest vote);
 
         [HttpGet("rooms/state")]
         public abstract Task<Response<RoomState, object>> GetRoomState();

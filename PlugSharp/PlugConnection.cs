@@ -197,12 +197,12 @@ namespace PlugSharp
             });
         }
 
-        private async void Websocket_OnError(object sender, Exception obj)
+        private void Websocket_OnError(object sender, Exception obj)
         {
-            await ExecuteSafeAsync(async () =>
+            ExecuteSafe(() =>
             {
+                OnError?.Invoke(sender, new ErrorEventArgs() { Error = obj, Ignore = true });
                 SendChatLog("Websocket ERROR: " + obj.Message, ChatLogType.Error);
-                await Disconnect(true);
             });
         }
 
@@ -307,9 +307,14 @@ namespace PlugSharp
             {
                 throw new ArgumentException("Slug was't set, please give the room you want to connect to");
             }
-            if (!SocketConnected && !Connecting)
+            if (!Connecting)
             {
+                if (SocketConnected)
+                {
+                    await Websocket.Close();
+                }
                 Connecting = true;
+                OnChatLog?.Invoke(this, new ChatLog() { Type = ChatLogType.Info, Message = $"Connecting to {LastSlug}" });
                 var sfstData = await _GetcfstAsync();
                 await _LoginAsync(sfstData);
                 var authtoken = await _GetAuthTokenAsync();

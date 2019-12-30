@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard1.5</TargetFramework>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.0.1</Version>
+    <Version>3.0.9</Version>
     <Copyright>Levi Gillis 2019</Copyright>
     <PackageProjectUrl>https://github.com/Levi--G/PlugSharp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Levi--G/PlugSharp.git</RepositoryUrl>
@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JsonHCS.Net.Proxies" Version="1.4.0" />
+    <PackageReference Include="JsonHCS.Net.Proxies" Version="1.5.2" />
     <PackageReference Include="System.Net.WebSockets.Client" Version="4.3.2" />
   </ItemGroup>
 

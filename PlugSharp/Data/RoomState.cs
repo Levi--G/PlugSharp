@@ -6,7 +6,7 @@ namespace PlugSharp.Data
     {
         public Booth booth;
         public object fx;
-        public int[] grabs;
+        public Dictionary<string, int> grabs;
         public RoomStateMeta meta;
         public IDictionary<string, int> mutes;
         public Playback playback;
