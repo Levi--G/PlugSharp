@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.5</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.0.9</Version>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Version>3.0.10</Version>
     <Copyright>Levi Gillis 2019</Copyright>
     <PackageProjectUrl>https://github.com/Levi--G/PlugSharp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Levi--G/PlugSharp.git</RepositoryUrl>
@@ -13,11 +13,11 @@
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Plug</PackageTags>
-    <PackageReleaseNotes>Initial release on NuGet</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated JsonHCS</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JsonHCS.Net.Proxies" Version="1.5.2" />
+    <PackageReference Include="JsonHCS.Net.Proxies" Version="1.6.1" />
     <PackageReference Include="System.Net.WebSockets.Client" Version="4.3.2" />
   </ItemGroup>
 
