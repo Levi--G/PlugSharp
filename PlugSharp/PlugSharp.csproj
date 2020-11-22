@@ -4,13 +4,13 @@
     <TargetFramework>netstandard1.5</TargetFramework>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>3.0.11</Version>
+    <Version>3.0.12</Version>
     <Copyright>Levi Gillis 2019</Copyright>
     <PackageProjectUrl>https://github.com/Levi--G/PlugSharp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Levi--G/PlugSharp.git</RepositoryUrl>
     <Description>A c# client library for plug.dj bots or clients</Description>
     <NeutralLanguage></NeutralLanguage>
-    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Plug</PackageTags>
     <PackageReleaseNotes>Updated JsonHCS</PackageReleaseNotes>
