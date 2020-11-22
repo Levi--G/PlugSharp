@@ -105,7 +105,7 @@ namespace PlugSharp.WebSockets
 
         public async void StartListen()
         {
-            await Listen();
+            await Listen().ConfigureAwait(false);
         }
 
         public async Task Listen()
@@ -121,10 +121,10 @@ namespace PlugSharp.WebSockets
                     WebSocketReceiveResult result;
                     do
                     {
-                        result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), _cancellationToken);
+                        result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), _cancellationToken).ConfigureAwait(false);
                         if (result.MessageType == WebSocketMessageType.Close)
                         {
-                            await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+                            await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None).ConfigureAwait(false);
                             //OnDisconnected?.Invoke(this, this);
                             break;
                         }
@@ -134,7 +134,7 @@ namespace PlugSharp.WebSockets
                             stringResult.Append(str);
                         }
 
-                    } while (!result.EndOfMessage);
+                    } while (!(result?.EndOfMessage ?? true));
                     if (result != null && result.MessageType == WebSocketMessageType.Text)
                     {
                         OnMessageReceived?.Invoke(this, stringResult.ToString());
