@@ -141,7 +141,10 @@ namespace PlugSharp
                 ErrorEventArgs args = new ErrorEventArgs() { Error = e, Ignore = IgnoreErrorDefault };
 
                 ErrorOverride?.Invoke(args);
-                OnError?.Invoke(this, args);
+                if (OnError != null)
+                {
+                    ExecuteSync(() => { OnError(this, args); });
+                }
 
                 if (!args.Ignore)
                 {
@@ -163,7 +166,10 @@ namespace PlugSharp
                 ErrorEventArgs args = new ErrorEventArgs() { Error = e, Ignore = IgnoreErrorDefault };
 
                 ErrorOverride?.Invoke(args);
-                OnError?.Invoke(this, args);
+                if (OnError != null)
+                {
+                    ExecuteSync(() => { OnError(this, args); });
+                }
 
                 if (!args.Ignore)
                 {
@@ -203,11 +209,14 @@ namespace PlugSharp
 
         private void Websocket_OnError(object sender, Exception obj)
         {
-            ExecuteSafe(() =>
+            if (OnError != null)
             {
-                OnError?.Invoke(sender, new ErrorEventArgs() { Error = obj, Ignore = true });
-                SendChatLog("Websocket ERROR: " + obj.Message, ChatLogType.Error);
-            });
+                ExecuteSync(() =>
+                {
+                    OnError(sender, new ErrorEventArgs() { Error = obj, Ignore = true });
+                });
+            }
+            SendChatLog("Websocket ERROR: " + obj.Message, ChatLogType.Error);
         }
 
         private void Websocket_OnOpened(object sender, WebSocketWrapper socket)
@@ -325,7 +334,7 @@ namespace PlugSharp
                     await Websocket.Close();
                 }
                 Connecting = true;
-                OnChatLog?.Invoke(this, new ChatLog() { Type = ChatLogType.Info, Message = $"Connecting to {LastSlug}" });
+                SendChatLog($"Connecting to {LastSlug}");
                 var sfstData = await _GetcfstAsync();
                 await _LoginAsync(sfstData);
                 var authtoken = await _GetAuthTokenAsync();
