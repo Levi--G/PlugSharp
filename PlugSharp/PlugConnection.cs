@@ -22,7 +22,7 @@ namespace PlugSharp
         private string Email { get; set; }
         private string password { get; set; }
 
-        public SynchronizationContext sync { get; set; }
+        public SynchronizationContext SynchronizationContext { get; set; }
 
         public event EventHandler<Chat> OnChat;
 
@@ -118,9 +118,9 @@ namespace PlugSharp
 
         private void ExecuteSync(Action a)
         {
-            if (sync != null && SynchronizationContext.Current != sync)
+            if (SynchronizationContext != null && SynchronizationContext.Current != SynchronizationContext)
             {
-                sync.Post((s) => { ExecuteSafe(a); }, null);
+                SynchronizationContext.Post((s) => { ExecuteSafe(a); }, null);
             }
             else
             {
