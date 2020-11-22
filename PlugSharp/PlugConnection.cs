@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,23 +15,33 @@ namespace PlugSharp
     ///https://github.com/plugcommunity/documentation/tree/master/api/endpoints
     public class PlugConnection : IDisposable
     {
-        JsonHCS WebClient;
-        WebSocketWrapper Websocket;
+        private JsonHCS WebClient;
+        private WebSocketWrapper Websocket;
         public PlugAPI API { get; private set; }
 
-        string Email { get; set; }
-        string password { get; set; }
+        private string Email { get; set; }
+        private string password { get; set; }
 
         public SynchronizationContext sync { get; set; }
+
         public event EventHandler<Chat> OnChat;
+
         public event EventHandler<ChatLog> OnChatLog;
+
         public event EventHandler<Vote> OnVote;
+
         public event EventHandler<Grab> OnGrab;
+
         public event EventHandler<User> OnUserJoin;
+
         public event EventHandler<UserLeave> OnUserLeave;
+
         public event EventHandler<Advance> OnAdvance;
+
         public event EventHandler<PlugConnection> OnConnected;
+
         public event EventHandler<PlugConnection> OnDisconnected;
+
         public event EventHandler<ErrorEventArgs> OnError;
 
         public bool IgnoreErrorDefault { get; set; }
@@ -87,28 +96,23 @@ namespace PlugSharp
 
         #region util
 
-        void DebugLog(string log)
+        private void DebugLog(string log)
         {
 #if DEBUG
             System.Diagnostics.Debug.WriteLine(log);
 #endif
         }
 
-        void Populate(object o, string json)
+        private string Stringify(object o)
         {
-            Newtonsoft.Json.JsonConvert.PopulateObject(json, o);
+            return JsonConvert.SerializeObject(o);
         }
 
-        string Stringify(object o)
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(o);
-        }
-
-        int TimeStamp
+        private int TimeStamp
         {
             get
             {
-                return (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                return (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
             }
         }
 
@@ -169,7 +173,7 @@ namespace PlugSharp
             }
         }
 
-        #endregion
+        #endregion util
 
         #region private
 
@@ -178,9 +182,9 @@ namespace PlugSharp
             return (await API.GetMobileInit()).data.FirstOrDefault();
         }
 
-        private async Task _LoginAsync(cfst cfstData)
+        private Task _LoginAsync(cfst cfstData)
         {
-            await API.Login(new LoginRequest() { email = Email, password = password, csrf = cfstData.c });
+            return API.Login(new LoginRequest() { email = Email, password = password, csrf = cfstData.c });
         }
 
         private async Task<string> _GetAuthTokenAsync()
@@ -250,6 +254,7 @@ namespace PlugSharp
             {
                 case "ack":
                     break;
+
                 case "chat":
                     if (OnChat != null)
                     {
@@ -258,18 +263,21 @@ namespace PlugSharp
                         ExecuteSync(() => { OnChat(this, c); });
                     }
                     break;
+
                 case "vote":
                     if (OnVote != null)
                     {
                         ExecuteSync(() => { OnVote(this, JsonConvert.DeserializeObject<Vote>(parameters)); });
                     }
                     break;
+
                 case "grab":
                     if (OnGrab != null)
                     {
                         ExecuteSync(() => { OnGrab(this, new Grab() { i = int.Parse(parameters) }); });
                     }
                     break;
+
                 case "userJoin":
                     if (OnUserJoin != null)
                     {
@@ -277,6 +285,7 @@ namespace PlugSharp
                         ExecuteSync(() => { OnUserJoin(this, join); });
                     }
                     break;
+
                 case "userLeave":
                     if (OnUserLeave != null)
                     {
@@ -284,6 +293,7 @@ namespace PlugSharp
                         ExecuteSync(() => { OnUserLeave(this, new UserLeave() { i = leaveid }); });
                     }
                     break;
+
                 case "advance":
                     var ad = JsonConvert.DeserializeObject<Advance>(parameters);
                     if (OnAdvance != null)
@@ -292,13 +302,14 @@ namespace PlugSharp
                     }
                     SendChatLog("Song changed to: " + ad.m.title, ChatLogType.SongChange);
                     break;
+
                 default:
                     DebugLog("Unknown type: " + type);
                     break;
             }
         }
 
-        #endregion
+        #endregion private
 
         public async Task ConnectAsync(string slug = null)
         {
@@ -406,6 +417,7 @@ namespace PlugSharp
             public Exception Error { get; set; }
             public bool Ignore { get; set; }
         }
+
         public struct ChatLog
         {
             public ChatLogType Type;

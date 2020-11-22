@@ -10,8 +10,11 @@ namespace PlugSharp.WebSockets
     internal class WebSocketWrapper : IDisposable
     {
         public event EventHandler<WebSocketWrapper> OnConnected;
+
         public event EventHandler<string> OnMessageReceived;
+
         public event EventHandler<WebSocketWrapper> OnDisconnected;
+
         public event EventHandler<Exception> OnError;
 
         private const int ReceiveChunkSize = 1024;
@@ -125,7 +128,6 @@ namespace PlugSharp.WebSockets
                         if (result.MessageType == WebSocketMessageType.Close)
                         {
                             await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None).ConfigureAwait(false);
-                            //OnDisconnected?.Invoke(this, this);
                             break;
                         }
                         else
@@ -133,7 +135,6 @@ namespace PlugSharp.WebSockets
                             var str = Encoding.UTF8.GetString(buffer, 0, result.Count);
                             stringResult.Append(str);
                         }
-
                     } while (!(result?.EndOfMessage ?? true));
                     if (result != null && result.MessageType == WebSocketMessageType.Text)
                     {
